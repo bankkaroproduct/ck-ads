@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>great.cards — Cohort Strategy</title>
+<style>
+  :root{
+    --ink:#0A1F3F;
+    --ink-soft:#4A5A72;
+    --paper:#FBFAF7;
+    --line:#E4E0D6;
+    --blue:#004FFF;
+    --blue-wash:#EAF0FF;
+    --yellow:#FFE600;
+    --teal:#0F6E56;
+    --teal-wash:#E1F5EE;
+    --amber:#854F0B;
+    --amber-wash:#FAEEDA;
+    --gray-wash:#F1EFE8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 28px}
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  section:last-child{border-bottom:none}
+
+  .eyebrow{
+    font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--blue);font-weight:600;margin-bottom:14px;
+  }
+  h1{font-size:52px;line-height:1.05;font-weight:700;letter-spacing:-.02em;margin-bottom:20px}
+  h2{font-size:32px;line-height:1.12;font-weight:700;letter-spacing:-.015em;margin-bottom:8px}
+  h3{font-size:19px;font-weight:600;margin-bottom:6px}
+  .lede{font-size:20px;color:var(--ink-soft);max-width:680px}
+  .section-intro{font-size:17px;color:var(--ink-soft);max-width:680px;margin-bottom:36px}
+
+  /* hero */
+  .hero{padding:96px 0 72px}
+  .hero-band{
+    display:inline-block;background:var(--yellow);
+    padding:2px 10px;border-radius:3px;color:var(--ink);
+    font-weight:700;
+  }
+  .hero-stats{display:flex;gap:0;margin-top:48px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+  .hero-stat{flex:1;padding:26px 24px;border-right:1px solid var(--line)}
+  .hero-stat:last-child{border-right:none}
+  .hero-stat .num{font-size:34px;font-weight:700;letter-spacing:-.02em;color:var(--blue)}
+  .hero-stat .num.ink{color:var(--ink)}
+  .hero-stat .lab{font-size:13px;color:var(--ink-soft);margin-top:2px}
+
+  /* funnel */
+  .funnel{margin-top:8px}
+  .frow{display:flex;align-items:center;gap:18px;margin:0 auto 10px;justify-content:center}
+  .fbar{
+    border-radius:8px;padding:16px 22px;color:#fff;font-weight:600;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .fbar .fnum{font-size:22px;font-weight:700}
+  .fbar.s1{background:var(--blue);width:100%}
+  .fbar.gap{background:repeating-linear-gradient(45deg,#EFEDE6,#EFEDE6 9px,#F6F5F0 9px,#F6F5F0 18px);color:var(--ink-soft);width:64%;border:1px dashed var(--line)}
+  .fbar.s3{background:var(--teal);width:30%;min-width:240px}
+  .fmeta{font-size:13px;opacity:.9;font-weight:500}
+  .opportunity{
+    margin-top:22px;background:var(--blue-wash);border-radius:12px;padding:20px 24px;
+    display:flex;align-items:center;gap:16px;
+  }
+  .opportunity .big{font-size:26px;font-weight:700;color:var(--blue);white-space:nowrap}
+  .opportunity .txt{font-size:15px;color:var(--ink)}
+
+  /* dual funnel */
+  .dual{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+  .fcard{border:1px solid var(--line);border-radius:14px;background:#fff;padding:24px}
+  .fcard .ftitle{font-size:15px;font-weight:700;margin-bottom:2px}
+  .fcard .fsub{font-size:13px;color:var(--ink-soft);margin-bottom:20px}
+  .step{margin-bottom:14px}
+  .step:last-child{margin-bottom:0}
+  .step .slabel{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;margin-bottom:5px}
+  .step .slabel .sn{font-weight:700;font-size:18px}
+  .step .sname{color:var(--ink-soft)}
+  .track{height:30px;border-radius:6px;background:var(--gray-wash);overflow:hidden}
+  .fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:12px;color:#fff;font-size:12px;font-weight:600}
+  .fill.b1{background:var(--blue)}
+  .fill.b2{background:#3D6FE5}
+  .fill.b3{background:var(--teal)}
+  .drop{font-size:12px;color:#A32D2D;font-weight:600;text-align:right;margin-top:3px}
+
+  /* cohort cards */
+  .cohorts{display:flex;flex-direction:column;gap:16px}
+  .cohort{
+    border:1px solid var(--line);border-radius:14px;padding:24px 26px;background:#fff;
+    display:grid;grid-template-columns:1fr auto;gap:8px 24px;align-items:start;
+  }
+  .cohort.lead{border:2px solid var(--blue);background:#fff}
+  .tag{
+    display:inline-block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;
+  }
+  .tag.primary{background:var(--blue-wash);color:var(--blue)}
+  .tag.secondary{background:var(--gray-wash);color:var(--ink-soft)}
+  .tag.rec{background:var(--yellow);color:var(--ink)}
+  .tag.supp{background:#FCEBEB;color:#A32D2D}
+  .cohort .desc{font-size:15px;color:var(--ink-soft);max-width:520px}
+  .cohort .size{text-align:right;white-space:nowrap}
+  .cohort .size .n{font-size:30px;font-weight:700;letter-spacing:-.02em}
+  .cohort .size .l{font-size:12px;color:var(--ink-soft)}
+  .status{font-size:13px;font-weight:600;margin-top:10px}
+  .status.ok{color:var(--teal)}
+  .status.todo{color:var(--amber)}
+
+  /* retailer table */
+  .rtable{width:100%;border-collapse:collapse;margin-top:8px;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .rtable th{
+    text-align:left;font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-soft);font-weight:600;padding:14px 20px;border-bottom:1px solid var(--line);
+  }
+  .rtable th.r,.rtable td.r{text-align:right}
+  .rtable td{padding:16px 20px;border-bottom:1px solid var(--line);font-size:15px}
+  .rtable tr:last-child td{border-bottom:none}
+  .rtable .retailer{font-weight:600}
+  .rtable .match{font-size:13px;color:var(--blue);font-weight:500}
+  .rtable .spend{font-weight:700}
+  .barcell{position:relative}
+  .bar{height:8px;border-radius:4px;background:var(--blue);display:inline-block;vertical-align:middle;margin-right:8px}
+
+  /* recommendation */
+  .rec{background:var(--ink);color:#fff;border-radius:18px;padding:44px 44px}
+  .rec .eyebrow{color:var(--yellow)}
+  .rec h2{color:#fff}
+  .rec p{color:#C9D2E0;font-size:17px;max-width:680px;margin-top:10px}
+  .rec ol{margin:28px 0 0;padding-left:0;counter-reset:step;list-style:none}
+  .rec li{
+    counter-increment:step;padding:16px 0 16px 56px;position:relative;
+    border-top:1px solid rgba(255,255,255,.12);font-size:16px;color:#E8EDF5;
+  }
+  .rec li::before{
+    content:counter(step);position:absolute;left:0;top:14px;
+    width:34px;height:34px;border-radius:50%;background:var(--blue);
+    color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px;
+  }
+  .rec li b{color:#fff;font-weight:600}
+
+
+  .foot{padding:40px 0;font-size:13px;color:var(--ink-soft)}
+  .foot b{color:var(--ink)}
+
+  @media(max-width:720px){
+    h1{font-size:38px}h2{font-size:26px}
+    .hero-stats{flex-direction:column}
+    .hero-stat{border-right:none;border-bottom:1px solid var(--line)}
+    .cohort{grid-template-columns:1fr}
+    .cohort .size{text-align:left}
+    .rec{padding:32px 24px}
+    .frow .fbar.s3{min-width:0}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">great.cards · growth strategy</div>
+    <h1>Turning CashKaro's base into<br>card-outs.</h1>
+    <p class="lede">CashKaro has a vast pool of users who shop constantly and browse credit cards — but never get one through us. This is who they are, and who we should notify first.</p>
+    <div class="hero-stats">
+      <div class="stat hero-stat">
+        <div class="num">589K</div>
+        <div class="lab">proven spenders without a card</div>
+      </div>
+      <div class="stat hero-stat">
+        <div class="num">₹1,060 Cr</div>
+        <div class="lab">their spend since Jan 2026</div>
+      </div>
+      <div class="stat hero-stat">
+        <div class="num ink">27.3%</div>
+        <div class="lab">apply → card-out conversion</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">the funnel</div>
+    <h2>Where the demand leaks.</h2>
+    <p class="section-intro">Two views of the same journey. Left: the path that starts at the Credit Cards category. Right: everyone who reached a card, by any route. They tell different — and complementary — stories.</p>
+
+    <div class="dual">
+
+      <div class="fcard">
+        <div class="ftitle">The guided path</div>
+        <div class="fsub">Users who entered via the Credit Cards category</div>
+
+        <div class="step">
+          <div class="slabel"><span class="sname">Clicked category</span><span class="sn">353,746</span></div>
+          <div class="track"><div class="fill b1" style="width:100%">100%</div></div>
+        </div>
+        <div class="step">
+          <div class="slabel"><span class="sname">Clicked apply on a card</span><span class="sn">117,699</span></div>
+          <div class="track"><div class="fill b2" style="width:33%">33%</div></div>
+          <div class="drop">−67% · 236K never engaged a card</div>
+        </div>
+        <div class="step">
+          <div class="slabel"><span class="sname">Got a card</span><span class="sn">28,209</span></div>
+          <div class="track"><div class="fill b3" style="width:8%"></div></div>
+          <div class="drop">−76% · 90K applied or browsed, no card</div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="ftitle">Total card demand</div>
+        <div class="fsub">Everyone who clicked apply — any entry point</div>
+
+        <div class="step">
+          <div class="slabel"><span class="sname">Clicked apply on a card</span><span class="sn">255,070</span></div>
+          <div class="track"><div class="fill b2" style="width:100%">100%</div></div>
+        </div>
+        <div class="step">
+          <div class="slabel"><span class="sname">Got a card</span><span class="sn">69,641</span></div>
+          <div class="track"><div class="fill b3" style="width:27%">27.3%</div></div>
+          <div class="drop">−73% · 185K applied, no card</div>
+        </div>
+        <div style="margin-top:20px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-soft)">
+          Only <b style="color:var(--ink)">46%</b> of apply-clicks come through the category icon — most users reach cards via search, deals or direct links. The category is a minority door.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">the menu</div>
+    <h2>Three cohorts, sized.</h2>
+    <p class="section-intro">Everyone below has been filtered to exclude users who already hold or are getting a card — so these are net-new card-out opportunities only.</p>
+
+    <div class="cohorts">
+      <div class="cohort">
+        <div>
+          <span class="tag primary">Primary · intent</span>
+          <h3>Card-intent, no card</h3>
+          <div class="desc">Clicked the Credit Cards category, logged in, never converted. The clearest signal — they were literally looking at cards.</div>
+          <div class="status ok">✓ Sized · highest intent · clean identity</div>
+        </div>
+        <div class="size">
+          <div class="n">320,806</div>
+          <div class="l">users</div>
+        </div>
+      </div>
+
+      <div class="cohort">
+        <div>
+          <span class="tag secondary">Secondary · spend</span>
+          <h3>Proven spenders, no card</h3>
+          <div class="desc">Earned confirmed cashback on Amazon, Flipkart, Myntra, Nykaa or Ajio since January. Creditworthy and active — but their intent is to shop, not to apply.</div>
+          <div class="status ok">✓ Sized · 1.8× bigger · ₹1,060 Cr proven spend</div>
+        </div>
+        <div class="size">
+          <div class="n">589,359</div>
+          <div class="l">users</div>
+        </div>
+      </div>
+
+      <div class="cohort">
+        <div>
+          <span class="tag supp">Suppressed</span>
+          <h3>Already has / getting a card</h3>
+          <div class="desc">Confirmed, pending or awaiting a card. Not a target for acquisition — but 42,844 are reachable for second-card cross-sell later.</div>
+          <div class="status todo">Excluded from every cohort above</div>
+        </div>
+        <div class="size">
+          <div class="n">~80,700</div>
+          <div class="l">exclusion set</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">the unlock</div>
+    <h2>Match the card to the cart.</h2>
+    <p class="section-intro">CashKaro already shows a "best for Flipkart" card next to Flipkart deals. We can do that at the user level: target each shopper with the card that pays back where they already spend.</p>
+
+    <table class="rtable">
+      <thead>
+        <tr>
+          <th>Retailer</th>
+          <th>Best-fit card</th>
+          <th class="r">Shoppers, no card</th>
+          <th class="r">Proven spend</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="retailer">Flipkart</td>
+          <td class="match">Axis / SBI Flipkart card</td>
+          <td class="r barcell"><span class="bar" style="width:120px"></span>409,976</td>
+          <td class="r spend">₹558.3 Cr</td>
+        </tr>
+        <tr>
+          <td class="retailer">Amazon</td>
+          <td class="match">SBI Cashback card</td>
+          <td class="r barcell"><span class="bar" style="width:82px"></span>280,269</td>
+          <td class="r spend">₹306.5 Cr</td>
+        </tr>
+        <tr>
+          <td class="retailer">Myntra</td>
+          <td class="match">Fashion / lifestyle card</td>
+          <td class="r barcell"><span class="bar" style="width:37px"></span>124,666</td>
+          <td class="r spend">₹49.7 Cr</td>
+        </tr>
+        <tr>
+          <td class="retailer">Ajio</td>
+          <td class="match">Fashion / lifestyle card</td>
+          <td class="r barcell"><span class="bar" style="width:11px"></span>35,856</td>
+          <td class="r spend">₹136.3 Cr</td>
+        </tr>
+        <tr>
+          <td class="retailer">Nykaa</td>
+          <td class="match">Beauty / cashback card</td>
+          <td class="r barcell"><span class="bar" style="width:7px"></span>22,354</td>
+          <td class="r spend">₹8.8 Cr</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px;color:var(--ink-soft);margin-top:14px">Flipkart and Amazon alone are 690K shoppers — each big enough for its own dedicated campaign with the exact card CashKaro already promotes.</p>
+  </section>
+
+  <section>
+    <div class="rec">
+      <div class="eyebrow">recommendation</div>
+      <h2>Notify Flipkart &amp; Amazon shoppers first.</h2>
+      <p>Lead with retailer-matched targeting. It resolves the size-vs-intent trade-off — the volume of the spend cohort with the relevance of intent, using a mechanic CashKaro already proves on its own homepage.</p>
+      <ol>
+        <li><b>Wave 1 — Flipkart shoppers (410K)</b> with the Axis/SBI Flipkart card. Biggest pool, clearest match, ₹558 Cr of proven spend behind the pitch.</li>
+        <li><b>Wave 2 — Amazon shoppers (280K)</b> with the SBI Cashback card. Second-largest, same logic.</li>
+        <li><b>Hold the card-intent cohort (321K)</b> as a parallel test — different message ("finish what you started"), highest intent, compare conversion head-to-head.</li>
+        <li><b>Test before scale</b> — run a 2–3K slice per wave, measure click → application → card-out, then widen only if the funnel holds.</li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="foot">
+    <b>Sources & method.</b> Funnel from CashKaro app events (firebaseapp, logged-in users, Jan–Jun 2026): category click (home_category_clicks = Credit Cards), apply click (store_main_cta, card stores), card-out (BankKaro reports, Confirmed). Guided path counts only users who entered via the category; total demand counts all apply-clickers. Spend cohorts from confirmed + paid cashback (cashback table, order date ≥ Jan 2026), deduplicated by user. All cohorts suppress users holding or applying for a card. Conversion rates use different denominators (intent vs apply) — labelled accordingly. Retailer rows overlap; 589,359 is the deduplicated spend-cohort total.
+  </div>
+
+</div>
+
+</body>
+</html>
